@@ -1,3 +1,4 @@
+#%%
 # -*- coding: utf-8 -*-
 """FelipeCortesTarea1.ipynb
 
@@ -11,3 +12,5 @@ import numpy as np
 n = np.arange(1, 101)
 S = np.sum(np.exp(n) * (n + 1))
 print(S)
+# %%
+# Nota: 7.0
