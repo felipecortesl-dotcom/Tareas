@@ -1,0 +1,41 @@
+---
+jupyter: python3
+---
+
+<a href="https://colab.research.google.com/github/felipecortesl-dotcom/Tareas/blob/main/tarea7.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+```{python}
+#| colab: {base_uri: https://localhost:8080/}
+import numpy as np
+
+# pdf normal estándar
+def pdf(t):
+    return np.exp(-t*t/2.0)/np.sqrt(2*np.pi)
+
+# trapecio compuesto en [0, p] con n subintervalos
+def trapecio_0p(p, n=20000):
+    a, b = 0.0, float(p)
+    h = (b - a)/n
+    xs = a + h*np.arange(1, n)               # puntos internos
+    s = 0.5*pdf(a) + 0.5*pdf(b) + np.sum(pdf(xs))
+    return h*s
+
+# f y su derivada
+def f(p, n=20000):   return trapecio_0p(p, n) - 0.45
+def df(p):          return pdf(p)
+
+# Newton con tolerancia 1e-5
+def newton(p0=1.5, tol=1e-5, nmax=50, ntrap=20000):
+    p = p0
+    for k in range(nmax):
+        p_new = p - f(p, ntrap)/df(p)
+        if abs(p_new - p) < tol:
+            return p_new, k+1
+        p = p_new
+    raise RuntimeError("No convergió")
+
+x, iters = newton()
+print(x, iters)  # 1.6448536..., 4
+```
+
+## Nota: 7.0
